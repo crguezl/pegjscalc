@@ -28,7 +28,7 @@ table        { border: inset; border-color: white; }
 table.center { margin-left:auto; margin-right:auto; }
 #result      { border-color: red; }
 .error       { font-family: terminal; background-color: red; }
-pre.output   { background-color: white; }
+#output      { background-color: white; }
 td           { background-color: #b0c4de; }
 span.header  { background-color: blue }
 span.jump    { background-color: orange }
