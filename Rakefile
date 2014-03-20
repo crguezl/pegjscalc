@@ -1,7 +1,11 @@
-PEGJS = "pegjs"
 task :default => :web
 
-desc "Compile arithmetics.pegjs browser version"
+desc "Compile pl0.pegjs browser version"
 task :web do
-  sh "#{PEGJS} -e calculator arithmetics.pegjs"
+  sh "pegjs -e pl0 views/pl0.pegjs public/pl0.js"
+end
+
+desc "Remove pl0.pegjs"
+task :clean do
+  sh "rm -f public/pl0.js"
 end
