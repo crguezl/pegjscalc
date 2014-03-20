@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $('#eval').click(function() {
+  $('#parse').click(function() {
     try {
       var result = pl0.parse($('#input').val());
       $('#output').html(JSON.stringify(result,undefined,2));

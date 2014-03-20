@@ -1,27 +1,39 @@
 <h1>pegjs</h1>
 <div id="content">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script src="pl0.js"></script>
-  <script src="main.js"></script>
-
   <p>
-  Load an example:
-  <input type="file" id="examples" />
+    Load an example:
+    <input type="file" id="examples" />
   </p>
-
   <p>
   <table>
     <tr>
       <td>
-        <textarea id="input" autofocus cols = "40" rows = "4">3-2*5-1</textarea> 
+        <form action="/save" method="post">
+          <textarea id="input" name="input" 
+                    autofocus cols = "40" rows = "4">
+                    <%= source %>
+          </textarea>
+          <br/>
+          <label for="saveas">Save as</label>
+          <input id="saveas" type="text" name="fname" 
+                 title="name" pattern="/\w+" />
+        </form>
       </td>
       <td class="output">
         <pre>
 <span id="output"></span> <!-- Output goes here! --> 
         </pre>
       </td>
-      <td><button id="eval" type="button">eval</button></td>
+      <td><button id="parse" type="button">parse</button></td>
     </tr>
   </table>
   </p>
+  <ul>
+    <% programs.each do |p| %>
+      <li><a href="<%= p.name %>"><%= p.name %></a></li>
+    <% end %>
+  </ul>
 </div>
+
+<script src="pl0.js"></script>
+<script src="main.js"></script>

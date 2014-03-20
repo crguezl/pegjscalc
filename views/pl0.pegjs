@@ -24,12 +24,14 @@ exp    = t:term   r:(ADD term)*   { return tree(t,r); }
 term   = f:factor r:(MUL factor)* { return tree(f,r); }
 
 factor = NUMBER
+       / ID
        / LEFTPAR t:exp RIGHTPAR   { return t; }
 
 _ = $[ \t\n\r]*
 
-ADD = _ op:[+-] _ { return op; }
-MUL = _ op:[*/] _ { return op; }
+ADD      = _ op:[+-] _ { return op; }
+MUL      = _ op:[*/] _ { return op; }
 LEFTPAR  = _"("_
 RIGHTPAR = _")"_
+ID       = _ id:$[a-zA-Z_][a-zA-Z_0-9]* _ { return id; }
 NUMBER   = _ digits:$[0-9]+ _ { return parseInt(digits, 10); }
