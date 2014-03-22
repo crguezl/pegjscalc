@@ -71,6 +71,7 @@ GEM
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
+    sass (3.3.3)
     sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -101,6 +102,7 @@ DEPENDENCIES
   dm-sqlite-adapter
   do_sqlite3
   pg
+  sass
   sinatra
   sinatra-contrib
   sinatra-flash

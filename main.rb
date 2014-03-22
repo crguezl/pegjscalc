@@ -12,13 +12,24 @@ class PL0Program
   include DataMapper::Resource
   
   property :name, String, :key => true
-  property :source, String, :length => 1024
+  property :source, String, :length => 1..1024
 end
 
   DataMapper.finalize
   DataMapper.auto_upgrade!
 
 enable :sessions
+
+helpers do
+  def current?(path='/')
+    (request.path==path || request.path==path+'/') ? "current" : nil
+  end
+end
+
+
+get '/grammar' do
+  erb :grammar
+end
 
 get '/:selected?' do |selected|
   programs = PL0Program.all

@@ -6,6 +6,7 @@ gem "sinatra-contrib"
 gem "sinatra-flash"
 gem "thin"
 gem 'data_mapper'
+gem 'sass'
 
 group :development do
   gem 'dm-sqlite-adapter'

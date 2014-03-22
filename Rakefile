@@ -9,3 +9,8 @@ desc "Remove pl0.pegjs"
 task :clean do
   sh "rm -f public/pl0.js"
 end
+
+desc "Compile pl0.pegjs browser version"
+task :sass do
+  sh "sass  public/styles.scss public/styles.css"
+end
