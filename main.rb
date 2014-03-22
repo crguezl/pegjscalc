@@ -22,7 +22,7 @@ enable :sessions
 
 helpers do
   def current?(path='/')
-    (request.path==path || request.path==path+'/') ? "current" : nil
+    (request.path==path || request.path==path+'/') ? 'class = "current"' : ''
   end
 end
 
