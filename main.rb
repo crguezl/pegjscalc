@@ -17,8 +17,6 @@ end
   DataMapper.finalize
   DataMapper.auto_upgrade!
 
-enable :sessions
-
 helpers do
   def current?(path='/')
     (request.path==path || request.path==path+'/') ? 'class = "current"' : ''
