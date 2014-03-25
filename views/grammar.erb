@@ -20,11 +20,14 @@ Recuerde que un PEG $G$ es una cuaterna $G =(\Sigma,V,P,S)$.
   $V$ que se denomina <i>expresión de arranque</i>.
 </ol>
 <ol>
-  <li> $\Sigma = \{ +, -, *, /, (, ), 0 \ldots 9 \}$, 
-  <li> $V = \{ exp, term, factor, ADD, MUL, LEFTPAR, RIGHTPAR, ID, NUMBER, \_ \}$
+  <li> $\Sigma = \{ =, +, -, *, /, (, ), 0 \ldots 9 \}$, 
+  <li> $V = \{ st, exp, term, factor \} \cup$ <br />
+  $\{ASSIGN, ADD, MUL, LEFTPAR, RIGHTPAR \} \cup$ <br />
+  $\{ID, NUMBER, \_ \}$
   <li> Reglas de Análisis:
   <ol>
 <pre>
+st     = ID ASSIGN exp
 exp    = term   (ADD term)*
 term   = factor (MUL factor)*
 
@@ -34,6 +37,7 @@ factor = NUMBER
 
 _ = $[ \t\n\r]*
 
+ASSIGN   = _ '=' _
 ADD      = _ [+-] _
 MUL      = _ [*/] _
 LEFTPAR  = _"("_
@@ -42,7 +46,7 @@ ID       = _ [a-zA-Z_][a-zA-Z_0-9]* _
 NUMBER   = _ [0-9]+ _
 </pre>
   </ol>
-  <li> Expresión de arranque: $exp$
+  <li> Expresión de arranque: $st$
 </ol>
 <BR>
 <BR>
