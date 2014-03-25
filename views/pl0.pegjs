@@ -22,24 +22,23 @@
 
 st     = i:ID ASSIGN e:exp            
             { return {type: '=', left: i, right: e}; }
-         / IF e:exp THEN st:st ELSE sf:st
-            { 
-              return {
-                type: 'IFELSE',
-                condition: e,
-                true_st: st,
-                else_st: sf
-              };
-            }
-         / IF e:exp THEN s:st 
-            { 
-              return {
-                type: 'IF',
-                condition: e,
-                statement: s
-              };
-            }
-
+       / IF e:exp THEN st:st ELSE sf:st
+           {
+             return {
+               type: 'IFELSE',
+               c:  e,
+               st: st,
+               sf: sf,
+             };
+           }
+       / IF e:exp THEN st:st    
+           {
+             return {
+               type: 'IF',
+               c:  e,
+               st: st
+             };
+           }
 exp    = t:term   r:(ADD term)*   { return tree(t,r); }
 term   = f:factor r:(MUL factor)* { return tree(f,r); }
 
@@ -57,7 +56,7 @@ RIGHTPAR = _")"_
 IF       = _ "if" _
 THEN     = _ "then" _
 ELSE     = _ "else" _
-ID       = _ id:$[a-zA-Z_][a-zA-Z_0-9]* _ 
+ID       = _ id:$([a-zA-Z_][a-zA-Z_0-9]*) _ 
             { 
               return { type: 'ID', value: id }; 
             }
