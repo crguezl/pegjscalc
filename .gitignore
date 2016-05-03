@@ -1,0 +1,4 @@
+.bundle/
+.sass-cache/
+database.db
+pegjscalc_herzog
