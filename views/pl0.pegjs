@@ -20,9 +20,9 @@
   }
 }
 
-st     = i:ID ASSIGN e:exp            
+st     = i:ID ASSIGN e:cond            
             { return {type: '=', left: i, right: e}; }
-       / IF e:exp THEN st:st ELSE sf:st
+       / IF e:cond THEN st:st ELSE sf:st
            {
              return {
                type: 'IFELSE',
@@ -31,7 +31,7 @@ st     = i:ID ASSIGN e:exp
                sf: sf,
              };
            }
-       / IF e:exp THEN st:st    
+       / IF e:cond THEN st:st    
            {
              return {
                type: 'IF',
@@ -39,6 +39,10 @@ st     = i:ID ASSIGN e:exp
                st: st
              };
            }
+
+cond = l:exp op:COMP r:exp { return { type: op, left: l, right: r} }
+     / exp
+
 exp    = t:term   r:(ADD term)*   { return tree(t,r); }
 term   = f:factor r:(MUL factor)* { return tree(f,r); }
 
@@ -63,4 +67,7 @@ ID       = _ id:$([a-zA-Z_][a-zA-Z_0-9]*) _
 NUMBER   = _ digits:$[0-9]+ _ 
             { 
               return { type: 'NUM', value: parseInt(digits, 10) }; 
+            }
+COMP     = _ op:("=="/"!="/"<="/">="/"<"/">") _ { 
+               return op;
             }
