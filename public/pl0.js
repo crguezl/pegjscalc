@@ -543,7 +543,7 @@ pl0 = (function() {
           s0 = peg$currPos;
           s1 = peg$parseLEFTPAR();
           if (s1 !== peg$FAILED) {
-            s2 = peg$parseexp();
+            s2 = peg$parsecond();
             if (s2 !== peg$FAILED) {
               s3 = peg$parseRIGHTPAR();
               if (s3 !== peg$FAILED) {

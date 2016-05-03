@@ -48,7 +48,7 @@ term   = f:factor r:(MUL factor)* { return tree(f,r); }
 
 factor = NUMBER
        / ID
-       / LEFTPAR t:exp RIGHTPAR   { return t; }
+       / LEFTPAR t:cond RIGHTPAR   { return t; }
 
 _ = $[ \t\n\r]*
 
