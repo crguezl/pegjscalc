@@ -40,7 +40,7 @@ pl0 = (function() {
                        console.log(s1);
                        console.log(r);
                        return {
-                         type: 'COMPOUND',
+                         type: 'COMPOUND', // Chrome supports destructuring
                          children: [s1].concat(r.map( ([_, st]) => st ))
                        };
                     },
