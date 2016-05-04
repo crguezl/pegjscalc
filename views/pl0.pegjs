@@ -28,8 +28,6 @@ st     = CL s1:st r:(SC st)* CR {
                  children: [s1].concat(r.map( ([_, st]) => st ))
                };
             }
-       / i:ID ASSIGN e:cond            
-            { return {type: '=', left: i, right: e}; }
        / IF e:assign THEN st:st ELSE sf:st
            {
              return {
@@ -47,6 +45,9 @@ st     = CL s1:st r:(SC st)* CR {
                st: st
              };
            }
+       / i:ID ASSIGN e:cond            
+            { return {type: '=', left: i, right: e}; }
+       / cond
 
 assign = i:ID ASSIGN e:cond            
             { return {type: '=', left: i, right: e}; }
