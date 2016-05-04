@@ -1,6 +1,6 @@
 /*
- * Classic example grammar, which recognizes simple arithmetic expressions like
- * "2*(3+4)". The parser generated from this grammar then AST.
+ * PEGjs for a "Pl-0" like language
+ * Used in ULL PL Grado de Informática classes
  */
 
 {
