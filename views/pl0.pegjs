@@ -23,6 +23,7 @@
 st     = CL s1:st? r:(SC st)* SC* CR {
                console.log(s1);
                console.log(r);
+               console.log(location()) /* atributos start y end */
                let t = [];
                if (s1) t.push(s1);
                return {
@@ -47,9 +48,7 @@ st     = CL s1:st? r:(SC st)* SC* CR {
                st: st
              };
            }
-       / i:ID ASSIGN e:cond            
-            { return {type: '=', left: i, right: e}; }
-       / cond
+       / assign
 
 assign = i:ID ASSIGN e:cond            
             { return {type: '=', left: i, right: e}; }
@@ -75,6 +74,9 @@ RIGHTPAR = _")"_
 CL       = _"{"_
 CR       = _"}"_
 SC       = _";"+_
+COMP     = _ op:("=="/"!="/"<="/">="/"<"/">") _ { 
+               return op;
+            }
 IF       = _ "if" _
 THEN     = _ "then" _
 ELSE     = _ "else" _
@@ -85,7 +87,4 @@ ID       = _ id:$([a-zA-Z_][a-zA-Z_0-9]*) _
 NUMBER   = _ digits:$[0-9]+ _ 
             { 
               return { type: 'NUM', value: parseInt(digits, 10) }; 
-            }
-COMP     = _ op:("=="/"!="/"<="/">="/"<"/">") _ { 
-               return op;
             }
