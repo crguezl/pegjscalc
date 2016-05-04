@@ -39,9 +39,11 @@ pl0 = (function() {
         peg$c0 = function(s1, r) {
                        console.log(s1);
                        console.log(r);
+                       let t = [];
+                       if (s1) t.push(s1);
                        return {
                          type: 'COMPOUND', // Chrome supports destructuring
-                         children: [s1].concat(r.map( ([_, st]) => st ))
+                         children: t.concat(r.map( ([_, st]) => st ))
                        };
                     },
         peg$c1 = function(e, st, sf) {
@@ -309,10 +311,22 @@ pl0 = (function() {
       s1 = peg$parseCL();
       if (s1 !== peg$FAILED) {
         s2 = peg$parsest();
+        if (s2 === peg$FAILED) {
+          s2 = null;
+        }
         if (s2 !== peg$FAILED) {
           s3 = [];
           s4 = peg$currPos;
-          s5 = peg$parseSC();
+          s5 = [];
+          s6 = peg$parseSC();
+          if (s6 !== peg$FAILED) {
+            while (s6 !== peg$FAILED) {
+              s5.push(s6);
+              s6 = peg$parseSC();
+            }
+          } else {
+            s5 = peg$FAILED;
+          }
           if (s5 !== peg$FAILED) {
             s6 = peg$parsest();
             if (s6 !== peg$FAILED) {
@@ -329,7 +343,16 @@ pl0 = (function() {
           while (s4 !== peg$FAILED) {
             s3.push(s4);
             s4 = peg$currPos;
-            s5 = peg$parseSC();
+            s5 = [];
+            s6 = peg$parseSC();
+            if (s6 !== peg$FAILED) {
+              while (s6 !== peg$FAILED) {
+                s5.push(s6);
+                s6 = peg$parseSC();
+              }
+            } else {
+              s5 = peg$FAILED;
+            }
             if (s5 !== peg$FAILED) {
               s6 = peg$parsest();
               if (s6 !== peg$FAILED) {
@@ -345,11 +368,22 @@ pl0 = (function() {
             }
           }
           if (s3 !== peg$FAILED) {
-            s4 = peg$parseCR();
+            s4 = [];
+            s5 = peg$parseSC();
+            while (s5 !== peg$FAILED) {
+              s4.push(s5);
+              s5 = peg$parseSC();
+            }
             if (s4 !== peg$FAILED) {
-              peg$savedPos = s0;
-              s1 = peg$c0(s2, s3);
-              s0 = s1;
+              s5 = peg$parseCR();
+              if (s5 !== peg$FAILED) {
+                peg$savedPos = s0;
+                s1 = peg$c0(s2, s3);
+                s0 = s1;
+              } else {
+                peg$currPos = s0;
+                s0 = peg$FAILED;
+              }
             } else {
               peg$currPos = s0;
               s0 = peg$FAILED;

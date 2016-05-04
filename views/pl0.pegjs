@@ -20,12 +20,14 @@
   }
 }
 
-st     = CL s1:st r:(SC st)* CR {
+st     = CL s1:st? r:(SC+ st)* SC* CR {
                console.log(s1);
                console.log(r);
+               let t = [];
+               if (s1) t.push(s1);
                return {
                  type: 'COMPOUND', // Chrome supports destructuring
-                 children: [s1].concat(r.map( ([_, st]) => st ))
+                 children: t.concat(r.map( ([_, st]) => st ))
                };
             }
        / IF e:assign THEN st:st ELSE sf:st
