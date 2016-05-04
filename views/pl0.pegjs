@@ -20,7 +20,7 @@
   }
 }
 
-st     = CL s1:st? r:(SC+ st)* SC* CR {
+st     = CL s1:st? r:(SC st)* SC* CR {
                console.log(s1);
                console.log(r);
                let t = [];
@@ -74,7 +74,7 @@ LEFTPAR  = _"("_
 RIGHTPAR = _")"_
 CL       = _"{"_
 CR       = _"}"_
-SC       = _";"_
+SC       = _";"+_
 IF       = _ "if" _
 THEN     = _ "then" _
 ELSE     = _ "else" _
