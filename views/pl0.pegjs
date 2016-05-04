@@ -24,7 +24,7 @@ st     = CL s1:st r:(SC st)* CR {
                console.log(s1);
                console.log(r);
                return {
-                 type: 'COMPOUND',
+                 type: 'COMPOUND', // Chrome supports destructuring
                  children: [s1].concat(r.map( ([_, st]) => st ))
                };
             }
