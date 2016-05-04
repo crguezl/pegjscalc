@@ -20,9 +20,17 @@
   }
 }
 
-st     = i:ID ASSIGN e:cond            
+st     = CL s1:st r:(SC st)* CR {
+               console.log(s1);
+               console.log(r);
+               return {
+                 type: 'COMPOUND',
+                 children: [s1].concat(r.map( ([_, st]) => st ))
+               };
+            }
+       / i:ID ASSIGN e:cond            
             { return {type: '=', left: i, right: e}; }
-       / IF e:cond THEN st:st ELSE sf:st
+       / IF e:assign THEN st:st ELSE sf:st
            {
              return {
                type: 'IFELSE',
@@ -31,7 +39,7 @@ st     = i:ID ASSIGN e:cond
                sf: sf,
              };
            }
-       / IF e:cond THEN st:st    
+       / IF e:assign THEN st:st    
            {
              return {
                type: 'IF',
@@ -39,6 +47,10 @@ st     = i:ID ASSIGN e:cond
                st: st
              };
            }
+
+assign = i:ID ASSIGN e:cond            
+            { return {type: '=', left: i, right: e}; }
+       / cond
 
 cond = l:exp op:COMP r:exp { return { type: op, left: l, right: r} }
      / exp
@@ -48,7 +60,7 @@ term   = f:factor r:(MUL factor)* { return tree(f,r); }
 
 factor = NUMBER
        / ID
-       / LEFTPAR t:cond RIGHTPAR   { return t; }
+       / LEFTPAR t:assign RIGHTPAR   { return t; }
 
 _ = $[ \t\n\r]*
 
@@ -57,6 +69,9 @@ ADD      = _ op:[+-] _ { return op; }
 MUL      = _ op:[*/] _ { return op; }
 LEFTPAR  = _"("_
 RIGHTPAR = _")"_
+CL       = _"{"_
+CR       = _"}"_
+SC       = _";"_
 IF       = _ "if" _
 THEN     = _ "then" _
 ELSE     = _ "else" _
