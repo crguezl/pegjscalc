@@ -39,11 +39,11 @@ pl0 = (function() {
         peg$c0 = function(s1, r) {
                        console.log(s1);
                        console.log(r);
-                       console.log(location())
+                       console.log(location()) /* atributos start y end */
                        let t = [];
                        if (s1) t.push(s1);
                        return {
-                         type: 'COMPOUND', // Chrome supports destructuring
+                         type: 'COMPOUNDZ', // Chrome supports destructuring
                          children: t.concat(r.map( ([_, st]) => st ))
                        };
                     },
