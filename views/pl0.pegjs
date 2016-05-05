@@ -37,12 +37,14 @@ block = cD:constantDeclaration? vD:varDeclaration? st:st
 constantDeclaration = CONST id:ID ASSIGN n:NUMBER rest:(COMMA ID ASSIGN NUMBER)* SC 
                         {
                           let r = rest.map( ([_, id, __, nu]) => [id.value, nu.value] );
-                          console.log(r);
                           return [[id.value, n.value]].concat(r) 
                         }
 
-varDeclaration = VAR ID ASSIGN NUMBER (COMMA ID ASSIGN NUMBER)* SC
-                    { return { type: 'VAR' }; }
+varDeclaration = VAR id:ID rest:(COMMA ID)* SC
+                    { 
+                      let r = rest.map( ([_, id]) => id.value );
+                      return [id.value].concat(r) 
+                    }
 
 st     = CL s1:st? r:(SC st)* SC* CR {
                //console.log(location()) /* atributos start y end */

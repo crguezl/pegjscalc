@@ -1,5 +1,6 @@
 const A = 4, 
       B = 30;
+var a, b, c;
 {
   while (a<4) do { 
     a = init();
