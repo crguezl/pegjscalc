@@ -8,7 +8,12 @@ fs.readFile(fileName, 'utf8', function (err,input) {
     return console.log(err);
   }
   console.log(`Processing <***\n${input}\n***>`);
-  var r = PEG.parse(input);
-  console.log(util.inspect(r, {depth: null}));
+  try {
+    var r = PEG.parse(input);
+    console.log(util.inspect(r, {depth: null}));
+  } catch (e) {
+    console.log(`Error en línea ${e.location.start.line} columna ${e.location.start.column}`);
+    console.log(e);
+  }
 });
 

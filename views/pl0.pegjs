@@ -49,6 +49,9 @@ st     = CL s1:st? r:(SC st)* SC* CR {
        / WHILE a:assign DO st:st {
              return { type: 'WHILE', c: a, st: st };
            }
+       / RETURN a:assign? {
+             return { type: 'RETURN', children: a? [a] : [] };
+           }
        / assign
 
 assign = i:ID ASSIGN e:cond            
@@ -94,6 +97,7 @@ THEN     = _ "then" _
 ELSE     = _ "else" _
 WHILE    = _ "while" _
 DO       = _ "do" _
+RETURN   = _ "return" _
 ID       = _ id:$([a-zA-Z_][a-zA-Z_0-9]*) _ 
             { 
               return { type: 'ID', value: id }; 
