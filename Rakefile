@@ -5,6 +5,11 @@ task :web do
   sh "pegjs -e pl0 views/pl0.pegjs public/pl0.js"
 end
 
+desc "Compile pl0.pegjs node version"
+task :node do
+  sh "pegjs views/pl0.pegjs pl0node.js"
+end
+
 desc "Remove pl0.pegjs"
 task :clean do
   sh "rm -f public/pl0.js"

@@ -21,9 +21,9 @@
 }
 
 st     = CL s1:st? r:(SC st)* SC* CR {
-               console.log(s1);
-               console.log(r);
-               console.log(location()) /* atributos start y end */
+               //console.log(s1);
+               //console.log(r);
+               //console.log(location()) /* atributos start y end */
                let t = [];
                if (s1) t.push(s1);
                return {
@@ -77,6 +77,7 @@ RIGHTPAR = _")"_
 CL       = _"{"_
 CR       = _"}"_
 SC       = _";"+_
+COMMA    = _","_
 COMP     = _ op:("=="/"!="/"<="/">="/"<"/">") _ { 
                return op;
             }
