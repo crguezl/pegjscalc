@@ -22,22 +22,27 @@
 
 program = block
 
-block = cD:constantDeclaration? vD:varDeclaration? st:statement {
+block = cD:constantDeclaration? vD:varDeclaration? st:st 
+          {
             let constants = cD? cD : [];
-            let variables = vD? vD : []
-            return { type: BLOCK, constants: cD, variables: vD, st: st};
+            let variables = vD? vD : [];
+            return { 
+              type: 'BLOCK', 
+              constants: constants, 
+              variables: variables, 
+              main: st
+            };
           }
 
 constantDeclaration = CONST id:ID ASSIGN n:NUMBER rest:(COMMA ID ASSIGN NUMBER)* SC 
                         {
-                          let r = rest.map( ([c, id, ass, nu]) => [id, nu] );
-                          return { 
-                            type: 'CONST', 
-                            children: [id, n].push(...r) // ECMA6
-                          }
+                          let r = rest.map( ([_, id, __, nu]) => [id.value, nu.value] );
+                          console.log(r);
+                          return [[id.value, n.value]].concat(r) 
                         }
 
 varDeclaration = VAR ID ASSIGN NUMBER (COMMA ID ASSIGN NUMBER)* SC
+                    { return { type: 'VAR' }; }
 
 st     = CL s1:st? r:(SC st)* SC* CR {
                //console.log(location()) /* atributos start y end */
@@ -117,8 +122,8 @@ ELSE     = _ "else" _
 WHILE    = _ "while" _
 DO       = _ "do" _
 RETURN   = _ "return" _
-VAR      = _ "VAR" _
-CONST    = _ "CONST" _
+VAR      = _ "var" _
+CONST    = _ "const" _
 ID       = _ id:$([a-zA-Z_][a-zA-Z_0-9]*) _ 
             { 
               return { type: 'ID', value: id }; 
