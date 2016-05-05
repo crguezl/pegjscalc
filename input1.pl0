@@ -1,5 +1,5 @@
 while (a<4) do { 
-  a = 8;
-  b = 4;
-  c =a*b
+  a = init();
+  b = fact(4);
+  c = chuchu(a*b, 3)
 } 

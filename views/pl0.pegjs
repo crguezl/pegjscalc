@@ -21,8 +21,6 @@
 }
 
 st     = CL s1:st? r:(SC st)* SC* CR {
-               //console.log(s1);
-               //console.log(r);
                //console.log(location()) /* atributos start y end */
                let t = [];
                if (s1) t.push(s1);
@@ -64,6 +62,16 @@ exp    = t:term   r:(ADD term)*   { return tree(t,r); }
 term   = f:factor r:(MUL factor)* { return tree(f,r); }
 
 factor = NUMBER
+       / f:ID LEFTPAR a:assign? r:(COMMA assign)* RIGHTPAR
+         {
+           let t = [];
+           if (a) t.push(a);
+           return { 
+             type: 'CALL',
+             func: f,
+             arguments: t.concat(r.map(([_, exp]) => exp))
+           }
+         }
        / ID
        / LEFTPAR t:assign RIGHTPAR   { return t; }
 
