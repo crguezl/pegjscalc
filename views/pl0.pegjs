@@ -20,6 +20,25 @@
   }
 }
 
+program = block
+
+block = cD:constantDeclaration? vD:varDeclaration? st:statement {
+            let constants = cD? cD : [];
+            let variables = vD? vD : []
+            return { type: BLOCK, constants: cD, variables: vD, st: st};
+          }
+
+constantDeclaration = CONST id:ID ASSIGN n:NUMBER rest:(COMMA ID ASSIGN NUMBER)* SC 
+                        {
+                          let r = rest.map( ([c, id, ass, nu]) => [id, nu] );
+                          return { 
+                            type: 'CONST', 
+                            children: [id, n].push(...r) // ECMA6
+                          }
+                        }
+
+varDeclaration = VAR ID ASSIGN NUMBER (COMMA ID ASSIGN NUMBER)* SC
+
 st     = CL s1:st? r:(SC st)* SC* CR {
                //console.log(location()) /* atributos start y end */
                let t = [];
@@ -98,6 +117,8 @@ ELSE     = _ "else" _
 WHILE    = _ "while" _
 DO       = _ "do" _
 RETURN   = _ "return" _
+VAR      = _ "VAR" _
+CONST    = _ "CONST" _
 ID       = _ id:$([a-zA-Z_][a-zA-Z_0-9]*) _ 
             { 
               return { type: 'ID', value: id }; 
