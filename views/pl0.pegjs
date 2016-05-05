@@ -48,6 +48,9 @@ st     = CL s1:st? r:(SC st)* SC* CR {
                st: st
              };
            }
+       / WHILE a:assign DO st:st {
+             return { type: 'WHILE', c: a, st: st };
+           }
        / assign
 
 assign = i:ID ASSIGN e:cond            
@@ -80,6 +83,8 @@ COMP     = _ op:("=="/"!="/"<="/">="/"<"/">") _ {
 IF       = _ "if" _
 THEN     = _ "then" _
 ELSE     = _ "else" _
+WHILE    = _ "while" _
+DO       = _ "do" _
 ID       = _ id:$([a-zA-Z_][a-zA-Z_0-9]*) _ 
             { 
               return { type: 'ID', value: id }; 
