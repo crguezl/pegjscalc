@@ -1,0 +1,5 @@
+{
+  a = 4*2;
+  while (a < 10) do a = fact(,a+1,b);
+  if (b <= 0) then chuchu()
+}
