@@ -22,10 +22,11 @@
 
 program = block
 
-block = cD:constantDeclaration? vD:varDeclaration? st:st 
+block = cD:constantDeclaration? vD:varDeclaration? fD:functionDeclarations? st:st 
           {
             let constants = cD? cD : [];
             let variables = vD? vD : [];
+            let functions = fD? fD : [];
             return { 
               type: 'BLOCK', 
               constants: constants, 
@@ -45,6 +46,11 @@ varDeclaration = VAR id:ID rest:(COMMA ID)* SC
                       let r = rest.map( ([_, id]) => id.value );
                       return [id.value].concat(r) 
                     }
+
+functionDeclaration = FUNCTION id:ID LEFTPAR !COMMA p1:ID? r:(COMMA ID)* RIGHTPAR block SC
+                        {
+                        }
+
 
 st     = CL s1:st? r:(SC st)* SC* CR {
                //console.log(location()) /* atributos start y end */
