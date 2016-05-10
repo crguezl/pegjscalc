@@ -22,7 +22,7 @@
 
 program = block
 
-block = cD:constantDeclaration? vD:varDeclaration? fD:functionDeclarations* st:st 
+block = cD:constantDeclaration? vD:varDeclaration? fD:functionDeclaration* st:st 
           {
             let constants = cD? cD : [];
             let variables = vD? vD : [];
