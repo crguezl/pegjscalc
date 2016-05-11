@@ -7,8 +7,9 @@ process.env.NODE_PATH += ":"+__dirname+"/lib/";
 require('module').Module._initPaths();
 var util = require('util');
 var fs = require('fs');
-var PEG = require("./pl0node.js");
-var fileName = process.argv[2] || 'input1.pl0';
+var PEG = require("pl0node.js");
+var fileName = process.argv[2] || 'tests/input5.pl0';
+
 const lineNumbers = (input) => {
   let count = 1;
   return input.replace(/^/mg, (x) => { 
