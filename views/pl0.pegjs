@@ -26,11 +26,11 @@ block = cD:constantDeclaration? vD:varDeclaration? fD:functionDeclaration* st:st
           {
             let constants = cD? cD : [];
             let variables = vD? vD : [];
-            let functions = fD? fD : [];
             return { 
               type: 'BLOCK', 
               constants: constants, 
               variables: variables, 
+              functions: fD, 
               main: st
             };
           }
@@ -47,9 +47,18 @@ varDeclaration = VAR id:ID rest:(COMMA ID)* SC
                       return [id.value].concat(r) 
                     }
 
-functionDeclaration = FUNCTION id:ID LEFTPAR !COMMA p1:ID? r:(COMMA ID)* RIGHTPAR block SC
-                        {
-                        }
+functionDeclaration = FUNCTION id:ID LEFTPAR !COMMA p1:ID? r:(COMMA ID)* RIGHTPAR SC b:block SC
+      {
+        let params = p1? [p1] : [];
+        params = params.concat(r.map(([_, p]) => p)); 
+        return {
+          type: 'FUNCTION',
+          name: id,
+          params: params,
+          block: b,
+        };
+
+      }
 
 
 st     = CL s1:st? r:(SC st)* SC* CR {
@@ -132,6 +141,7 @@ DO       = _ "do" _
 RETURN   = _ "return" _
 VAR      = _ "var" _
 CONST    = _ "const" _
+FUNCTION = _ "function" _
 ID       = _ id:$([a-zA-Z_][a-zA-Z_0-9]*) _ 
             { 
               return { type: 'ID', value: id }; 
