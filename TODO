@@ -1,0 +1,23 @@
+-- USO
+   para cada nodo del arbol ir 
+       al main
+      recorrer descendiendo el main.
+         cada vez que aparece un identificador buscar su definición en la tabla de símbolos
+              ¿fue declarado?
+              ¿es una constante y se esta cambiando?
+
+-- contruir tablas de simbolos para cada una de las funciones y el bloque principal
+  para cada variable: tipo entero y variable y linea, etc
+  para cada contante idem
+  para cada función parámetros y tiene su propia tabla de símbolos
+
+entrada identificador valor información
+ademas de un enlace father a la tabla de símbolos padre
+
+
+-- recorrer los "main", el bosque de sentencias por todas las apariciones de 
+nombre y ver si su uso es correcto de acuerdo al tipo
+   -- solo se puede llamar a las funciones
+   -- las numéricas solo apariciones numéricas
+   -- todos los símbolos deben haber sido declarados
+   -- no deben ser declarados dos veces
